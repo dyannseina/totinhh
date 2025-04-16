@@ -2,11 +2,17 @@
 <html lang="vi">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0"/>
   <title>Một vài lời muốn nói</title>
   <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Pacifico&display=swap" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
     body {
       font-family: 'Dancing Script', cursive;
       background: url('jj.gif') center/cover no-repeat;
@@ -20,27 +26,28 @@
       position: relative;
     }
 
-    /* Background overlay màu hồng mờ */
     body::before {
       content: "";
       position: absolute;
       top: 0; left: 0;
       width: 100%;
       height: 100%;
-      background-color: rgba(255, 192, 203, 0.2);
+      background-color: rgba(255, 192, 203, 0.3);
       z-index: 0;
+      backdrop-filter: blur(10px);
     }
 
     .letter-container {
-      background-color: rgba(255, 255, 255, 0.8);
+      background-color: rgba(255, 255, 255, 0.85);
       border: 4px solid #ffc0cb;
       padding: 40px;
-      width: 70%;
-      max-width: 800px;
+      width: 80%;
+      max-width: 700px;
       border-radius: 20px;
-      box-shadow: 0 0 20px rgba(255, 182, 193, 0.8);
+      box-shadow: 0 0 25px rgba(255, 182, 193, 0.8);
       z-index: 1;
       text-align: center;
+      backdrop-filter: blur(10px);
     }
 
     h1 {
@@ -53,9 +60,10 @@
 
     p {
       color: #5a3f33;
-      font-size: 24px;
+      font-size: 20px;
       margin-bottom: 20px;
       line-height: 1.6;
+      font-weight: 500;
     }
 
     .button {
@@ -68,7 +76,7 @@
       border: none;
       border-radius: 30px;
       cursor: pointer;
-      box-shadow: 2px 4px 10px rgba(0,0,0,0.2);
+      box-shadow: 2px 4px 15px rgba(0,0,0,0.15);
       transition: 0.3s ease;
       animation: pulse 2s infinite;
     }
@@ -76,6 +84,7 @@
     .button:hover {
       background-color: #ff6b81;
       transform: scale(1.05);
+      box-shadow: 0 0 20px rgba(255, 105, 135, 0.6);
     }
 
     @keyframes pulse {
@@ -116,6 +125,25 @@
         opacity: 0;
       }
     }
+
+    @media (max-width: 600px) {
+      h1 {
+        font-size: 36px;
+      }
+
+      p {
+        font-size: 18px;
+      }
+
+      .button {
+        font-size: 18px;
+        padding: 12px 25px;
+      }
+
+      .letter-container {
+        padding: 20px;
+      }
+    }
   </style>
 </head>
 <body>
@@ -130,12 +158,9 @@
   </div>
 
   <script>
-    // Popup và tạo tim khi nhấn nút
     function handleResponse(message, isLove) {
-      document.querySelectorAll('.button').forEach(btn => btn.disabled = true);
-
       Swal.fire({
-        title: isLove ? 'Camm onn' : 'Hmm ^^',
+        title: isLove ? 'Cảm ơn nhiều lắm!' : 'Hmm... ^^',
         text: message,
         icon: isLove ? 'success' : 'info',
         confirmButtonText: '❤️',
@@ -145,6 +170,7 @@
         }
       });
 
+      // Thêm tim bay nếu đồng ý
       if (isLove) {
         for (let i = 0; i < 30; i++) {
           setTimeout(() => createHeart(), i * 150);
@@ -152,7 +178,7 @@
       }
     }
 
-    // Tim bay
+    // Tạo tim bay
     function createHeart() {
       const heart = document.createElement('div');
       heart.classList.add('heart');
@@ -165,7 +191,7 @@
       setTimeout(() => heart.remove(), 6000);
     }
 
-    // Mưa tim tự động
+    // Tạo mưa tim tự động
     setInterval(() => {
       if (Math.random() > 0.7) createHeart();
     }, 300);
