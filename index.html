@@ -1,14 +1,14 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Lời Tỏ Tình</title>
   <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Pacifico&display=swap" rel="stylesheet">
   <style>
     body {
       font-family: 'Dancing Script', cursive;
-      background-image: url('jj.gif'); /* Hình nền giấy cũ */
+      background-image: url('jj.gif');
       background-size: cover;
       margin: 0;
       padding: 0;
@@ -16,7 +16,18 @@
       justify-content: center;
       align-items: center;
       height: 100vh;
+      opacity: 0;
+      animation: fadeIn 2s ease-in-out forwards;
+      position: relative;
+      overflow: hidden;
     }
+
+    @keyframes fadeIn {
+      to {
+        opacity: 1;
+      }
+    }
+
     .letter-container {
       background-color: #f8f1e4;
       border: 5px solid #d1a13d;
@@ -24,24 +35,28 @@
       width: 70%;
       max-width: 800px;
       box-shadow: 10px 10px 30px rgba(0, 0, 0, 0.2);
-      border-radius: 10px;
+      border-radius: 20px;
       font-size: 22px;
       line-height: 1.6;
       text-align: center;
+      position: relative;
+      z-index: 1;
     }
+
     h1 {
       font-family: 'Pacifico', cursive;
       color: #b85b29;
       font-size: 50px;
-      text-align: center;
       margin-bottom: 20px;
       text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
     }
+
     p {
       color: #5a3f33;
       font-size: 24px;
       margin-bottom: 20px;
     }
+
     .button {
       display: inline-block;
       width: 200px;
@@ -56,40 +71,78 @@
       text-align: center;
       text-decoration: none;
       box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2);
-      transition: background-color 0.3s ease;
+      transition: transform 0.2s ease, background-color 0.3s ease;
     }
+
     .button:hover {
       background-color: #e67e92;
+      transform: scale(1.05);
     }
-    .button:focus {
-      outline: none;
-    }
+
     .seal {
       font-size: 40px;
       color: #e74c3c;
       text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
       transform: rotate(10deg);
+      margin-top: 20px;
+    }
+
+    .heart {
+      position: absolute;
+      font-size: 24px;
+      animation: floatUp 2s linear forwards;
+      color: #e74c3c;
+      z-index: 0;
+    }
+
+    @keyframes floatUp {
+      0% {
+        transform: translateY(0) scale(1);
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(-200px) scale(1.5);
+        opacity: 0;
+      }
     }
   </style>
 </head>
 <body>
-  <!-- Thư tỏ tình trực tiếp hiển thị -->
   <div class="letter-container">
     <h1>Một vài lời muốn nói hjhj</h1>
     <p>Gửi Huyền,</p>
-    <p>Hmm, t biết là t còn nhiều điều thiếu sót, với cả t cũng hay nghĩ linh tinh nữa. T cũng biết như vậy nhiều lần khiến m khó chịu nữa, t cảm ơn m đã xuất hiện trong cuộc đời t. Ngoài m ra thì chẳng ai quan tâm đến những cái cảm xúc vớ vẩn của t, tất nhiên là ngoài m cũng chẳng ai dỗ dành t nữa. Cảm ơn m đã đọc hết những lời nói này của t.</p>
-    <p>Còn một điều cuối. T muốn nói là t thích m, m làm người yêu t nhé.</p>
-    <div class="button" onclick="handleResponse('T cung yeu m')">Đồng ý</div>
-    <div class="button" onclick="handleResponse('Hongg sao hett t van cho m')">Từ chối</div>
+    <p>Hmm, t biết là t còn nhiều điều thiếu sót, với cả t cũng hay nghĩ linh tinh nữa. T cũng biết như vậy nhiều lần khiến m khó chịu nữa, t cảm ơn m đã xuất hiện trong cuộc đời t. Ngoài m ra thì chẳng ai quan tâm đến những cái cảm xúc vớ vẩn của t, tất nhiên là ngoài m cũng chẳng ai dỗ dành t nữa.</p>
+    <p>Thế nên là m đồng ý làm người yêu t nhé?</p>
+    <div class="button" onclick="handleResponse('T cũng yêu m', true)">Đồng ý</div>
+    <div class="button" onclick="handleResponse('Hongg sao hết t vẫn chờ m', false)">Từ chối</div>
     <div class="seal">💌</div>
   </div>
 
   <script>
-    function handleResponse(response) {
+    function handleResponse(message, isLove) {
       const buttons = document.querySelectorAll('.button');
       buttons.forEach(button => button.disabled = true);
-      
-      alert(`Cảm ơn m đã trả lời: ${response}`);
+
+      alert(`Cảm ơn m đã trả lời: ${message}`);
+
+      if (isLove) {
+        for (let i = 0; i < 15; i++) {
+          createHeart();
+        }
+      }
+    }
+
+    function createHeart() {
+      const heart = document.createElement('div');
+      heart.classList.add('heart');
+      heart.innerText = '💖';
+      heart.style.left = Math.random() * 100 + 'vw';
+      heart.style.top = '80vh';
+      document.body.appendChild(heart);
+
+      setTimeout(() => {
+        heart.remove();
+      }, 2000);
     }
   </script>
 </body>
